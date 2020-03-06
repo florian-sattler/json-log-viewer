@@ -8,9 +8,12 @@ let _transform = 'unloaded';
 
 function loadTransform(_fs=fs) {
   if (_transform === 'unloaded') {
-    const transformFile = path.join(os.homedir(), '.json-log-viewer');
+    const transformFile = path.resolve('.json-log-viewer');
     if (!_fs.existsSync(transformFile)) {
-      return;
+      transformFile = path.join(os.homedir(), '.json-log-viewer');
+        if (!_fs.existsSync(transformFile)) {
+			return;
+		}
     }
 
     const contents = _fs.readFileSync(transformFile, 'utf8');
