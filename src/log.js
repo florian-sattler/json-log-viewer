@@ -8,7 +8,7 @@ let _transform = 'unloaded';
 
 function loadTransform(_fs=fs) {
   if (_transform === 'unloaded') {
-    const transformFile = path.resolve('.json-log-viewer');
+    let transformFile = path.resolve('.json-log-viewer');
     if (!_fs.existsSync(transformFile)) {
       transformFile = path.join(os.homedir(), '.json-log-viewer');
         if (!_fs.existsSync(transformFile)) {
