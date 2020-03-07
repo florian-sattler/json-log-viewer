@@ -26,6 +26,7 @@ Hotkeys:
 - ?   to search
 - n   to search again
 - s   to sort
+- i   to toggle ascending/descending sort
 - f   to filter
 - l   to filter by level
 - g   to go to line
@@ -64,6 +65,16 @@ Format:
 - ``L``           - log level with colors
 - ``*``           - space if extra data is empty, otherwise ``*`` (star)
 - `` `` (space)   - space if field is empty or undefined
+
+## Usage
+```
+jv application.log.2017-01-01 --sort timestamp --desc
+```
+
+Params:
+- ``--sort``, ``-s``  - sort by next argument
+- ``--level``, ``-l`` - log level
+- ``--desc``, ``-d``  - descending sort
 
 ## Screenshots
 
