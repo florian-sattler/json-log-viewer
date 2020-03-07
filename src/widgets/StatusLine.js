@@ -42,7 +42,7 @@ class StatusLine extends blessed.Box {
   }
 
   update() {
-    const mode = `{yellow-bg}{black-fg}{bold} ${this.mode} {/}`;
+    const mode = `{yellow-bg}{#f0f0f0-fg}{bold} ${this.mode} {/}`;
     const line = `{bold}${this.row}{/}/{bold}${this.lastRow}{/}`;
     const pageSize = `| {bold}${this.pageHeight}{/}`;
     const sort = this.sort ? `| sort: {bold}${this.sort}{/}` : '';
