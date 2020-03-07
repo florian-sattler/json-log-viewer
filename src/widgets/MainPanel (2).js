@@ -18,7 +18,7 @@ config.get().columns.forEach( column => {
 
 class MainPanel extends BaseWidget {
   constructor(opts={}) {
-    super(Object.assign({}, { top: '0', height: '99%', handleKeys: true }, opts));
+    super(Object.assign({}, { top: '0', height: '98%', handleKeys: true }, opts));
 
     this.currentPage = opts.currentPage || 1;
     this.initialRow = opts.initialRow || 0;
@@ -43,7 +43,7 @@ class MainPanel extends BaseWidget {
     this.renderLines();
   }
 
-  get pageHeight() { return this.height - 4; };
+  get pageHeight() { return this.height - 3; };
   get pageWidth() { return this.width - 2 - 2; };
 
   loadFile(file) {
@@ -141,9 +141,6 @@ class MainPanel extends BaseWidget {
 
   handleKeyPress(ch, key) {
     this.log('key', ch || (key && key.name));
-    if (key.name === 'f1') {
-      this.help();
-    }
 
     if (key.name === 'down') {
       this.moveDown();
@@ -155,8 +152,7 @@ class MainPanel extends BaseWidget {
     }
     if (ch === 'W') {
       this.watch = !this.watch;
-      this.update('notify');
-      // this.message(`Watch: ${this.watch}`);
+      this.message(`Watch: ${this.watch}`);
       return;
     }
     if (key.name === 'w') {
@@ -236,51 +232,6 @@ class MainPanel extends BaseWidget {
       this.moveToCenterViewportLine();
       return;
     }
-  }
-
-  help() {
-    const str = `
-    arrows and page up/down to move    
-    enter - display details
-
-    /   to search
-    ?   to search
-    n   to search again
-    s   to sort
-    f   to filter
-    l   to filter by level
-    g   to go to line
-    0   to go to first line
-    $   to go to last line
-    A   to first viewport line
-    G   to last viewport line
-    C   to center viewport line
-    w   to wrap toggle
-    W   to watch file toggle
-    q   to quit
-    `;
-    const prompt = blessed.box({
-      parent: this,
-      border: 'line',
-      height: 'shrink',
-  width: 'shrink',
-      top: 'center',
-      left: 'center',
-      label: ' {blue-fg}Prompt{/blue-fg} ',
-      content: str,
-      tags: true,
-      keys: true,
-      vi: true,
-      padding: 1,
-    });
-    this.screen.append(prompt);
-    prompt.focus();
-    this.screen.render();
-    const that = this;
-    prompt.key(['escape'], function(ch, key) {
-      that.screen.remove(prompt);
-      that.renderLines();
-    });
   }
 
   openLevelFilter() {
@@ -441,15 +392,9 @@ class MainPanel extends BaseWidget {
       if (index < startRow) {
         return false;
       }
-      const l = JSON.stringify(json);
-      const match = caseSensitive
-        ? l
-        : l.toLowerCase();
-      /*
       const match = caseSensitive
         ? `${json.timestamp} ${json.message}`
         : `${json.timestamp} ${json.message}`.toLowerCase();
-      */
       return match.indexOf(searchTerm) > -1;
     });
   }

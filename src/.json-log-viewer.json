@@ -1,0 +1,8 @@
+{
+  "columns": [
+    { "title": "Timestamp", "key": "timestamp" },
+    { "title": "Level", "key": "level", "format": "L" },
+    { "title": "D", "key": "data", "format": "*" },
+    { "title": "Message", "key": "message" }
+  ]
+}

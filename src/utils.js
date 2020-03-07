@@ -1,4 +1,7 @@
+/* eslint-disable no-const-assign */
 const _ = require('lodash');
+
+
 
 const COLOR_TAG_REGEX = /{\/?[\w\-,;!#]+}/g;
 
@@ -6,8 +9,19 @@ const formatRows = (rows, columns, spacing=1, maxWidth) => {
   const lengths = maxLengths(columns, rows, spacing, maxWidth);
   return rows.map(row => {
     return columns.map(column => {
-      const { format, key } = column;
-      const rawValue = row[key];
+      // eslint-disable-next-line prefer-const
+      let { format, key } = column;
+      if (format === 'L') {
+        format = function (v) { return levelColors[v](v); };
+      } else if (format === '*') {
+        format = function (v) { return _.isEmpty(v) ? ' ' : '*'; };
+      } else if (format === ' ') {
+        format = function (v) { return _.isEmpty(v) ? ' ' : v; };
+      }
+      let rawValue = row[key];
+      if (typeof rawValue === 'undefined') {
+        rawValue = row.data[key];
+      }
 
       try {
         const value = _.isFunction(format) ? format(rawValue) : rawValue;

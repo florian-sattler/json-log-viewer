@@ -4,9 +4,9 @@ const _ = require('lodash');
 class StatusLine extends blessed.Box {
   constructor(opts={}) {
     super(Object.assign({}, {
-      top: opts.screen.height-1,
-      left: 0,
-      width: '100%',
+      top: opts.screen.height-3,
+      left: 1,
+      width: '99%',
       height: 1,
       tags: true,
       style: {
@@ -48,7 +48,7 @@ class StatusLine extends blessed.Box {
     const sort = this.sort ? `| sort: {bold}${this.sort}{/}` : '';
     const filterExpr = this.filters.map(f => `${f.key}:${f.value}`).join(' ');
     const filters = filterExpr ? `| filters: {bold}${filterExpr}{/}` : '';
-    this.setContent(` ${mode} ${line} ${pageSize} ${sort} ${filters}`);
+    this.setContent(` ${mode} ${line} ${pageSize} ${sort} ${filters} W:${this.mainPanel.watch}`);
     this.screen.render();
   }
 }
