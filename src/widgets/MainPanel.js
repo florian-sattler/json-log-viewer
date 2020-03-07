@@ -34,6 +34,10 @@ class MainPanel extends BaseWidget {
     this.updated = true;
     this.watch = false;
 
+    if (opts.desc) {
+      this.sort = `-${this.sort}`;
+    }
+
     this.log('pageWidth', this.pageWidth);
     this.on('resize', () => {
       this.screen.render();
@@ -63,9 +67,17 @@ class MainPanel extends BaseWidget {
               this.fsWait = false;
             }, 100);
             this.loadFile(this.file);
-            while ( this.row < this.lastRow ) {
-              this.moveDown();
+
+            if ( this.sort.startsWith('-')) {
+              while ( this.row > 0 ) {
+                this.moveUp();
+              }
+            } else {
+              while ( this.row < this.lastRow ) {
+                this.moveDown();
+              }
             }
+
             /*
             this.moveToLine(this.rawLines.length-1);
             this.pageUp();
@@ -220,6 +232,16 @@ class MainPanel extends BaseWidget {
       this.loadFile(this.file);
       return;
     }
+    if (ch === 'i') {
+      let sort;
+      if (this.sort.startsWith('-')) {
+        sort = this.sort.substring(1);
+      } else {
+        sort = `-${this.sort}`;
+      }
+      this.setSort(sort);
+      return;
+    }
     if (ch === 'q') {
       process.exit(0);
       return;
@@ -247,6 +269,7 @@ class MainPanel extends BaseWidget {
     ?   to search
     n   to search again
     s   to sort
+    i   to toggle ascending/descending sort
     f   to filter
     l   to filter by level
     g   to go to line
