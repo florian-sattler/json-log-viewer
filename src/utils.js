@@ -12,7 +12,7 @@ const formatRows = (rows, columns, spacing=1, maxWidth) => {
       // eslint-disable-next-line prefer-const
       let { format, key } = column;
       if (format === 'L') {
-        format = function (v) { return levelColors[v](v); };
+        format = function (v) { return levelColors[v?.toLowerCase()](v); };
       } else if (format === '*') {
         format = function (v) { return _.isEmpty(v) ? ' ' : '*'; };
       } else if (format === ' ') {
