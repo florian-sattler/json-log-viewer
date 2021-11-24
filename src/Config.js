@@ -19,7 +19,8 @@ class Config {
             transformFile = path.join(os.homedir(), '.json-log-viewer.json');
         }
         if (fs.existsSync(transformFile)) {
-            this.contents = fs.readFileSync(transformFile, 'utf8');
+            this.contents =  fs.readFileSync(transformFile, 'utf8');
+            this.contents = JSON.parse(this.contents);
         } else {
             this.contents = {
                 'columns': [{
